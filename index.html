@@ -369,6 +369,111 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
 .cloud-hint { font-size: 11.5px; line-height: 1.8; color: var(--muted); }
 .cloud-hint a { color: var(--accent-2); text-decoration: none; border-bottom: 1px solid var(--border-strong); }
 .cloud-hint a:hover { border-color: var(--accent); }
+.cloud-actions label.btn { cursor: pointer; }
+.page-drop {
+  border: 1.5px dashed var(--border-strong); border-radius: 10px; padding: 14px;
+  text-align: center; cursor: pointer; background: var(--input); color: var(--text-2);
+}
+.page-drop:hover, .page-drop.drag { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-2); }
+.page-drop b { display: block; font-size: 12.5px; font-weight: 600; }
+.page-drop span { font-size: 11px; color: var(--muted); }
+.cloud-log {
+  font-size: 11.5px; line-height: 1.8; color: var(--text-2); background: var(--input);
+  border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; min-height: 46px;
+  word-break: break-word;
+}
+.cloud-log b { color: var(--text); }
+.cloud-log .bad { color: var(--danger); }
+.cloud-log .good { color: var(--ok); }
+
+/* ---------- Version badge & compare ---------- */
+.ver-badge {
+  display: inline-flex; align-items: center; vertical-align: 2px; margin-left: 7px;
+  padding: 2px 7px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: .2px;
+  color: var(--accent-2); background: var(--accent-soft); border: 1px solid rgba(139,124,248,.32);
+  font-variant-numeric: tabular-nums; cursor: pointer; text-transform: none;
+}
+.ver-badge:hover { border-color: var(--accent); }
+.ver-compare {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  padding: 10px 12px; border-radius: 9px; background: var(--panel-2); border: 1px solid var(--border);
+}
+.ver-cell { display: flex; flex-direction: column; gap: 2px; min-width: 96px; }
+.ver-cell small { font-size: 10.5px; color: var(--muted); }
+.ver-cell b { font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.ver-cell b.same { color: var(--ok); }
+.ver-cell b.older { color: var(--star); }
+.ver-cell b.newer { color: var(--accent-2); }
+.ver-compare .spacer { flex: 1; }
+.ver-status { font-size: 11.5px; line-height: 1.7; color: var(--text-2); }
+.ver-status .good { color: var(--ok); }
+.ver-status .bad { color: var(--danger); }
+
+/* ---------- Unsaved-changes guard ---------- */
+.confirm-layer {
+  position: fixed; inset: 0; background: rgba(4,6,12,.68); backdrop-filter: blur(2px);
+  z-index: 50; display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.confirm-layer.open { display: flex; }
+.confirm-box {
+  width: min(430px, 100%); background: var(--panel); border: 1px solid var(--border-strong);
+  border-radius: 14px; padding: 22px; box-shadow: var(--shadow);
+}
+.confirm-box h3 { margin: 0 0 8px; font-size: 15px; font-weight: 700; }
+.confirm-box p { margin: 0 0 18px; font-size: 13px; color: var(--text-2); line-height: 1.75; }
+.confirm-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.draft-bar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 10px 12px; border-radius: 9px; font-size: 12px; color: var(--text-2);
+  background: rgba(245,185,66,.09); border: 1px solid rgba(245,185,66,.4);
+}
+.draft-bar > span { flex: 1; min-width: 170px; }
+.draft-bar .actions { display: flex; gap: 6px; }
+
+/* ---------- Segments (multi-shot prompts) ---------- */
+.seg-badge {
+  display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 20px;
+  font-size: 10.5px; font-weight: 700; color: var(--video); background: var(--video-soft); white-space: nowrap;
+}
+.seg-preview { font-size: 11.5px; color: var(--muted); line-height: 1.65; }
+.seg-preview div { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.seg-preview b { color: var(--accent-2); font-weight: 600; }
+.seg-list { display: flex; flex-direction: column; gap: 10px; }
+.seg-card { border: 1px solid var(--border); border-radius: 11px; background: var(--input); overflow: hidden; }
+.seg-head {
+  display: flex; align-items: center; gap: 8px; padding: 8px 10px;
+  background: var(--panel-2); border-bottom: 1px solid var(--border);
+}
+.seg-no { font-size: 10.5px; font-weight: 700; color: var(--accent-2); background: var(--accent-soft); padding: 3px 7px; border-radius: 6px; flex: 0 0 auto; }
+.seg-head input.seg-label {
+  flex: 1; min-width: 0; background: transparent; border: none; border-bottom: 1px solid transparent;
+  padding: 3px 5px; font-size: 13px; font-weight: 600;
+}
+.seg-head input.seg-label:focus { outline: none; border-bottom-color: var(--accent); }
+.seg-actions { display: flex; gap: 2px; flex: 0 0 auto; }
+.seg-actions button {
+  width: 24px; height: 24px; border: none; background: transparent; color: var(--muted);
+  border-radius: 6px; font-size: 13px; line-height: 1;
+}
+.seg-actions button:hover { background: var(--panel); color: var(--text); }
+.seg-body { padding: 11px; display: flex; flex-direction: column; gap: 9px; }
+.seg-body textarea { min-height: 76px; font-size: 12.5px; }
+.seg-body .row2 { gap: 9px; }
+.seg-body .field { gap: 5px; }
+.seg-body .field .label { font-size: 11px; }
+.seg-body input[type="text"] { padding: 7px 9px; font-size: 12px; }
+.seg-drop {
+  border: 1.5px dashed var(--border-strong); border-radius: 8px; padding: 9px; text-align: center;
+  font-size: 11.5px; color: var(--muted); cursor: pointer;
+}
+.seg-drop:hover, .seg-drop.drag { border-color: var(--accent); color: var(--accent-2); background: var(--accent-soft); }
+.seg-previews { grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); }
+.seg-previews .preview { border-radius: 7px; }
+.add-seg {
+  width: 100%; border: 1.5px dashed var(--border-strong); background: transparent; color: var(--text-2);
+  border-radius: 10px; padding: 10px; font-size: 12.5px;
+}
+.add-seg:hover { border-color: var(--accent); color: var(--accent-2); }
 
 @media (max-width: 900px) {
   .layout { grid-template-columns: 1fr; height: auto; min-height: calc(100vh - 66px); }
@@ -395,7 +500,7 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
     <div class="brand-mark">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H18a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5.5Z"/><path d="M8 4v16M12.5 9.5l1.2 2.3 2.3 1.2-2.3 1.2-1.2 2.3-1.2-2.3-2.3-1.2 2.3-1.2 1.2-2.3Z"/></svg>
     </div>
-    <div><h1>提示词库</h1><span>Prompt Vault</span></div>
+    <div><h1>提示词库 <b class="ver-badge" id="appVer" title="点击查看与仓库的版本对比">v…</b></h1><span>Prompt Vault</span></div>
   </div>
   <div class="stats" id="stats"></div>
   <div class="top-actions">
@@ -480,6 +585,10 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
       </button>
     </div>
     <div class="drawer-body">
+      <div class="draft-bar" id="draftBar" style="display:none">
+        <span>检测到上次未保存的草稿（<span id="draftTime"></span>），要恢复吗？</span>
+        <div class="actions"><button class="btn sm" id="draftRestore">恢复草稿</button><button class="btn sm" id="draftDrop">丢弃</button></div>
+      </div>
       <div class="field">
         <div class="label">类型 <span class="req">*</span></div>
         <div class="type-picker" id="typePicker">
@@ -515,14 +624,20 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
           </datalist>
         </div>
         <div class="field">
-          <div class="label">参考链接</div>
-          <input type="url" id="fLink" placeholder="https://… 作品 / 视频链接">
+          <div class="label">Seed 种子</div>
+          <input type="text" id="fSeed" placeholder="例：123456789 / -1 / 随机">
         </div>
       </div>
 
-      <div class="field">
-        <div class="label">补充参数 <span class="tip">负向词 / 比例 / 时长 / 镜头等</span></div>
-        <input type="text" id="fExtra" placeholder="例：--ar 16:9 --stylize 250 ；或：8s，慢推镜，无字幕">
+      <div class="row2">
+        <div class="field">
+          <div class="label">参考链接</div>
+          <input type="url" id="fLink" placeholder="https://… 作品 / 视频链接">
+        </div>
+        <div class="field">
+          <div class="label">补充参数 <span class="tip">负向词 / 比例 / 时长</span></div>
+          <input type="text" id="fExtra" placeholder="--ar 16:9 ；或：8s，慢推镜">
+        </div>
       </div>
 
       <div class="field">
@@ -542,6 +657,12 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
         </div>
         <input type="file" id="fileInput" accept="image/*" multiple hidden>
         <div class="preview-grid" id="previewGrid"></div>
+      </div>
+
+      <div class="field">
+        <div class="label">分镜 / 多段提示词 <span class="tip" id="segCount">0 段 · 每段可单独配提示词、Seed 和参考图</span></div>
+        <div class="seg-list" id="segmentList"></div>
+        <button class="add-seg" id="addSegBtn">+ 添加一段分镜</button>
       </div>
 
       <div class="field">
@@ -595,10 +716,47 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
         <button class="btn" id="cExport">导出发布包</button>
         <button class="btn primary" id="cPublish">发布到 GitHub</button>
       </div>
+      <div class="field">
+        <div class="label">同步页面文件 <span class="tip">本地 index.html 改完后推到仓库</span></div>
+        <div class="cloud-note"><b>请用「选择本地文件」上传新版 index.html。</b>如果在线上页面点「同步当前页面源码」，抓到的是线上已有的同一份文件，提交后不会产生任何更新。页面文件更新后 Pages 会自动重建，数据文件不受影响。</div>
+        <div class="ver-compare">
+          <div class="ver-cell"><small>当前页面版本</small><b id="verLocal">—</b></div>
+          <div class="ver-cell"><small>仓库里的版本</small><b id="verRemote">未检查</b></div>
+          <div class="spacer"></div>
+          <button class="btn sm" id="cCheckVer">检查仓库版本</button>
+        </div>
+        <div class="ver-status" id="verStatus">点「检查仓库版本」确认线上是否已更新；上传成功后这里会自动刷新。</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div class="label">页面文件路径 <span class="tip">Pages 从 /docs 发布时填 docs/index.html</span></div>
+          <input type="text" id="cPagePath" placeholder="index.html">
+        </div>
+        <div class="page-drop" id="cPageDrop">
+          <b>把本地 index.html 拖到这里，或点击选择文件</b>
+          <span>选择后会显示文件大小、格式与版本识别结果</span>
+        </div>
+        <input type="file" id="cHtmlFile" accept=".html,text/html" hidden>
+        <div class="cloud-actions">
+          <button class="btn primary" id="cUploadHtml">上传所选文件</button>
+          <button class="btn" id="cSyncCurrent">同步当前页面源码（谨慎）</button>
+        </div>
+        <div class="cloud-log" id="cHtmlInfo">当前页面版本 <b>—</b>。未选择文件。</div>
+      </div>
       <div class="cloud-note warn"><b>请注意</b><br>公开仓库 + Pages 意味着<b>提示词和参考图全网可读</b>，不要放敏感内容。令牌只保存在这台设备的浏览器里，不会写进仓库；共用电脑或页面存在恶意脚本时仍有泄漏风险，请使用限定单仓库的 fine-grained 令牌。写入后 Pages 需要重新构建，通常 1–2 分钟后生效。</div>
       <div class="cloud-note"><b>部署步骤</b><ol><li>把 index.html 放到仓库根目录，Settings → Pages → 从 main 分支 /root 发布。</li><li>在仓库根目录加一个空的 .nojekyll 文件（跳过 Jekyll，避免静态文件被额外处理）。</li><li>点「发布到 GitHub」自动生成 data/prompts.json；或点「导出发布包」，把 prompts.json 手动放进仓库再 push。</li><li>之后任何设备打开同一个网址，都会读到同一份数据。</li></ol></div>
     </div>
     <div class="drawer-foot"><div class="spacer"></div><span class="hint">令牌不会上传</span><button class="btn" id="cClose">关闭</button><button class="btn primary" id="cSave">保存设置</button></div>
+  </div>
+</div>
+
+<div class="confirm-layer" id="confirmLayer">
+  <div class="confirm-box" role="alertdialog" aria-modal="true" aria-label="未保存的内容">
+    <h3>还有未保存的内容</h3>
+    <p>这条提示词还没保存，直接关闭会丢失刚才填写的内容。你已经输入的内容已自动存成草稿，下次打开也可以恢复。</p>
+    <div class="confirm-actions">
+      <button class="btn" id="cfKeep">继续编辑</button>
+      <button class="btn danger" id="cfDiscard">不保存并关闭</button>
+      <button class="btn primary" id="cfSave">保存并关闭</button>
+    </div>
   </div>
 </div>
 
@@ -608,6 +766,56 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
 <script>
 /* ============ Utilities ============ */
 const $ = (s) => document.querySelector(s);
+const APP_VERSION = '2026.11.15-5';
+let REMOTE_VERSION = null;
+function extractVersion(text) {
+  const m = /const\s+APP_VERSION\s*=\s*'([^']+)'/.exec(String(text || ''));
+  return m ? m[1] : null;
+}
+function compareVer(a, b) {
+  const pa = String(a || '').split(/[.\-_]/).map(Number);
+  const pb = String(b || '').split(/[.\-_]/).map(Number);
+  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+    const d = (pa[i] || 0) - (pb[i] || 0);
+    if (d) return d > 0 ? 1 : -1;
+  }
+  return 0;
+}
+function renderVersionCompare(statusHtml) {
+  const badge = $('#appVer'); if (badge) badge.textContent = 'v' + APP_VERSION;
+  $('#verLocal').textContent = 'v' + APP_VERSION;
+  const r = $('#verRemote');
+  if (!REMOTE_VERSION) { r.textContent = '未检查'; r.className = ''; }
+  else {
+    r.textContent = 'v' + REMOTE_VERSION;
+    const c = compareVer(REMOTE_VERSION, APP_VERSION);
+    r.className = c === 0 ? 'same' : (c < 0 ? 'older' : 'newer');
+  }
+  if (statusHtml !== undefined) $('#verStatus').innerHTML = statusHtml;
+}
+async function checkRemoteVersion() {
+  const c = CLOUD.cfg;
+  if (!c.owner || !c.repo || !c.token) {
+    renderVersionCompare('<span class="bad">需要先填写仓库所有者、仓库名和访问令牌</span>，才能读取仓库里的页面版本。'); return;
+  }
+  renderVersionCompare('正在读取仓库里的 <b>' + esc(c.pagePath || 'index.html') + '</b> …');
+  try {
+    const info = await githubReadFile(c.pagePath || 'index.html');
+    if (!info) { REMOTE_VERSION = null; renderVersionCompare('<span class="bad">仓库里还没有这个页面文件</span>，可用「上传所选文件」创建。'); return; }
+    const v = extractVersion(info.content);
+    if (!v) { REMOTE_VERSION = null; renderVersionCompare('<span class="bad">仓库里的页面没有版本标记</span>，说明线上是很旧的版本，上传本地新版 index.html 即可。'); return; }
+    REMOTE_VERSION = v;
+    const c0 = compareVer(v, APP_VERSION);
+    renderVersionCompare(c0 === 0
+      ? '<span class="good">版本一致</span>：仓库里的页面已是当前版本，Pages 构建完成后线上就是这一版。'
+      : (c0 < 0
+        ? '仓库版本 <b>v' + esc(v) + '</b> 比当前页面旧，说明<b>新版还没推上去</b>（或 Pages 仍在构建）。请上传本地新版 index.html。'
+        : '仓库版本 <b>v' + esc(v) + '</b> 比当前页面新，你正在看的是旧版页面，刷新或清缓存后再试。'));
+  } catch (e) {
+    REMOTE_VERSION = null;
+    renderVersionCompare('<span class="bad">检查失败</span>：' + esc(e.message));
+  }
+}
 const uid = () => (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ('p' + Date.now() + Math.random().toString(36).slice(2, 8));
 const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
 const fmtDate = (t) => { const d = new Date(t); return (d.getMonth()+1) + '/' + d.getDate() + ' ' + String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0'); };
@@ -737,8 +945,86 @@ const state = {
   items: [], query: '', type: 'all', tag: '', project: '', favOnly: false,
   sort: 'updated_desc', view: 'grid', theme: 'dark'
 };
-const editor = { id: null, type: 'image', images: [], tags: [] };
+const editor = { id: null, type: 'image', images: [], tags: [], segments: [] };
 const PREFS = 'prompt_vault_prefs';
+const DRAFT_KEY = 'prompt_vault_draft';
+let EDITOR_SNAPSHOT = '';
+let PENDING_DRAFT = null;
+let editorOpenedAt = 0;
+let suppressDraft = false;
+let draftTimer = null;
+
+/* ============ Draft & unsaved-changes guard ============ */
+function readDraft() { try { return JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null'); } catch (e) { return null; } }
+function clearDraft() { try { localStorage.removeItem(DRAFT_KEY); } catch (e) {} }
+function draftHasContent(st) {
+  return !!(st && (String(st.title || '').trim() || String(st.prompt || '').trim() || String(st.seed || '').trim() ||
+    String(st.extra || '').trim() || String(st.notes || '').trim() || String(st.tagInput || '').trim() ||
+    (st.tags || []).length || (st.images || []).length || (st.segments || []).length || st.fav));
+}
+function collectEditorState() {
+  collectSegInputs();
+  return {
+    type: editor.type,
+    title: $('#fTitle').value, prompt: $('#fPrompt').value, seed: $('#fSeed').value,
+    extra: $('#fExtra').value, tool: $('#fTool').value, link: $('#fLink').value,
+    notes: $('#fNotes').value, fav: $('#fFav').checked,
+    tagInput: $('#fTagInput').value, tags: editor.tags.slice(),
+    images: editor.images.map(im => ({ ...im })),
+    segments: editor.segments.map(s => ({
+      id: s.id, label: s.label, prompt: s.prompt, seed: s.seed, extra: s.extra,
+      images: (s.images || []).map(im => ({ ...im }))
+    }))
+  };
+}
+function applyEditorState(st) {
+  setType(st.type === 'video' ? 'video' : 'image');
+  $('#fTitle').value = st.title || ''; $('#fPrompt').value = st.prompt || '';
+  $('#fSeed').value = st.seed || ''; $('#fExtra').value = st.extra || '';
+  $('#fTool').value = st.tool || ''; $('#fLink').value = st.link || '';
+  $('#fNotes').value = st.notes || ''; $('#fFav').checked = !!st.fav;
+  $('#fTagInput').value = st.tagInput || '';
+  editor.tags = (st.tags || []).slice();
+  editor.images = (st.images || []).map(im => ({ ...im }));
+  editor.segments = (st.segments || []).map(s => ({
+    id: s.id || uid(), label: s.label || '', prompt: s.prompt || '', seed: s.seed || '', extra: s.extra || '',
+    images: Array.isArray(s.images) ? s.images.map(im => ({ ...im })) : []
+  }));
+  updatePromptCount(); renderTagPills(); renderPreviews(); renderSegments(true);
+}
+function scheduleDraft() {
+  if (suppressDraft || !$('#overlay').classList.contains('open')) return;
+  clearTimeout(draftTimer);
+  draftTimer = setTimeout(() => {
+    if (suppressDraft || !$('#overlay').classList.contains('open')) return;
+    try {
+      const st = collectEditorState();
+      if (!draftHasContent(st)) { clearDraft(); return; }
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({ id: editor.id, state: st, savedAt: Date.now() }));
+    } catch (e) {}
+  }, 400);
+}
+function showDraftBar(d) {
+  PENDING_DRAFT = d;
+  $('#draftTime').textContent = new Date(d.savedAt).toLocaleString('zh-CN');
+  $('#draftBar').style.display = 'flex';
+}
+function hideDraftBar() { PENDING_DRAFT = null; $('#draftBar').style.display = 'none'; }
+function editorHasChanges() {
+  if (!$('#overlay').classList.contains('open')) return false;
+  return JSON.stringify(collectEditorState()) !== EDITOR_SNAPSHOT;
+}
+function openConfirm() { $('#confirmLayer').classList.add('open'); }
+function closeConfirm() { $('#confirmLayer').classList.remove('open'); }
+function closeEditor(force) {
+  if (!force && editorHasChanges()) { openConfirm(); return false; }
+  if (force) clearDraft();
+  hideDraftBar();
+  $('#overlay').classList.remove('open');
+  EDITOR_SNAPSHOT = '';
+  return true;
+}
+function requestCloseEditor() { return closeEditor(false); }
 
 function savePrefs() {
   try { localStorage.setItem(PREFS, JSON.stringify({ theme: state.theme, view: state.view, sort: state.sort })); } catch (e) {}
@@ -767,7 +1053,8 @@ function filtered() {
     if (state.project && it.title !== state.project) return false;
     if (state.favOnly && !it.favorite) return false;
     if (q) {
-      const hay = [it.title, it.prompt, it.extra, it.tool, it.notes, it.link, (it.tags || []).join(' ')].join(' ').toLowerCase();
+      const segText = (it.segments || []).map(s => [s.label, s.prompt, s.seed, s.extra].join(' ')).join(' ');
+      const hay = [it.title, it.prompt, it.seed, it.extra, it.tool, it.notes, it.link, (it.tags || []).join(' '), segText].join(' ').toLowerCase();
       if (!hay.includes(q)) return false;
     }
     return true;
@@ -788,7 +1075,8 @@ function renderStats() {
   const img = state.items.filter(i => i.type === 'image').length;
   const vid = t - img;
   const fav = state.items.filter(i => i.favorite).length;
-  const pics = state.items.reduce((n, i) => n + (i.images || []).length, 0);
+  const pics = state.items.reduce((n, i) => n + (i.images || []).length + (i.segments || []).reduce((m, s) => m + (s.images || []).length, 0), 0);
+  const segs = state.items.reduce((n, i) => n + (i.segments || []).length, 0);
   $('#stats').innerHTML =
     '<div class="stat"><b>' + t + '</b><small>总条数</small></div>' +
     '<div class="stat i"><b>' + img + '</b><small>图片</small></div>' +
@@ -797,7 +1085,7 @@ function renderStats() {
   const storeTip = DB.mode === 'idb'
     ? '数据保存在<b>本机浏览器</b>，换设备请用「导出 / 导入」迁移。'
     : (DB.mode === 'ls' ? '当前为<b>轻量存储模式</b>，容量有限，请定期导出备份。' : '当前环境<b>无法持久化</b>，请及时导出备份。');
-  $('#sideFoot').innerHTML = storeTip + '<br>共 <b>' + t + '</b> 条记录 · <b>' + pics + '</b> 张参考图';
+  $('#sideFoot').innerHTML = storeTip + '<br>共 <b>' + t + '</b> 条记录 · <b>' + pics + '</b> 张参考图' + (segs ? ' · <b>' + segs + '</b> 段分镜' : '');
 }
 
 function renderSidebar() {
@@ -831,8 +1119,28 @@ function renderSidebar() {
     : '<div class="side-empty">还没有项目</div>';
 }
 
+function fullPromptText(it) {
+  const segs = it.segments || [];
+  if (!segs.length) return it.prompt;
+  const head = [
+    '# ' + it.title,
+    '类型：' + (it.type === 'video' ? '视频' : '图片'),
+    it.prompt,
+    it.seed ? 'Seed：' + it.seed : '',
+    it.extra ? '补充参数：' + it.extra : ''
+  ].filter(Boolean).join('\n');
+  const body = segs.map((s, i) => [
+    '',
+    '--- 分镜 ' + (i + 1) + (s.label ? '：' + s.label : '') + ' ---',
+    s.prompt || '',
+    s.seed ? 'Seed：' + s.seed : '',
+    s.extra ? '镜头参数：' + s.extra : ''
+  ].filter(Boolean).join('\n')).join('\n');
+  return head + '\n' + body;
+}
 function cardHTML(it) {
-  const imgs = it.images || [];
+  const segs = it.segments || [];
+  const imgs = (it.images || []).length ? it.images : ((segs[0] && segs[0].images) || []);
   let media;
   if (imgs.length) {
     media = '<div class="thumbs">' + imgs.slice(0, 3).map(im =>
@@ -842,11 +1150,16 @@ function cardHTML(it) {
     media = '<div class="no-thumbs">' + ICON.image + '暂无参考图</div>';
   }
   const tags = (it.tags || []).length ? '<div class="tags">' + it.tags.slice(0, 5).map(t => '<span>#' + esc(t) + '</span>').join('') + '</div>' : '';
-  const extra = it.extra ? '<div class="extra-line">' + esc(it.extra) + '</div>' : '';
+  const meta = [it.seed ? 'Seed ' + it.seed : '', it.extra || ''].filter(Boolean).join(' · ');
+  const extra = meta ? '<div class="extra-line">' + esc(meta) + '</div>' : '';
+  const segBadge = segs.length ? '<span class="seg-badge">' + segs.length + ' 段分镜</span>' : '';
+  const segPreview = segs.length ? '<div class="seg-preview">' + segs.slice(0, 2).map((s, i) =>
+    '<div><b>' + (i + 1) + '. ' + esc(s.label || '未命名') + '</b> ' + esc(String(s.prompt || '').slice(0, 46)) + '</div>'
+  ).join('') + (segs.length > 2 ? '<div>… 还有 ' + (segs.length - 2) + ' 段</div>' : '') + '</div>' : '';
   const link = it.link ? '<a href="' + esc(it.link) + '" target="_blank" rel="noopener" data-act="link" title="打开参考链接" style="color:var(--muted);display:inline-flex">' + ICON.link + '</a>' : '';
   return '<article class="card" data-id="' + it.id + '" data-act="edit">' +
     '<div class="card-top">' +
-      '<span class="type-badge ' + it.type + '">' + (it.type === 'video' ? ICON.video : ICON.image) + (it.type === 'video' ? '视频' : '图片') + '</span>' +
+      '<span class="type-badge ' + it.type + '">' + (it.type === 'video' ? ICON.video : ICON.image) + (it.type === 'video' ? '视频' : '图片') + '</span>' + segBadge +
       '<span class="time">' + fmtDate(it.updatedAt) + '</span>' +
       '<div class="card-actions">' +
         '<button class="' + (it.favorite ? 'on' : '') + '" data-act="fav" title="收藏">' + (it.favorite ? ICON.starFill : ICON.star) + '</button>' +
@@ -854,7 +1167,7 @@ function cardHTML(it) {
       '</div>' +
     '</div>' + media +
     '<div class="card-title" title="' + esc(it.title) + '">' + esc(it.title) + '</div>' +
-    '<div class="prompt-text">' + esc(it.prompt) + '</div>' + extra + tags +
+    '<div class="prompt-text">' + esc(it.prompt) + '</div>' + extra + segPreview + tags +
     '<div class="card-foot">' + link +
       '<span class="tool">' + esc(it.tool || (it.type === 'video' ? '视频提示词' : '图片提示词')) + '</span>' +
       '<span class="copy" data-act="copy">' + ICON.copy + '复制</span>' +
@@ -889,23 +1202,85 @@ function render() {
 function setType(v) {
   editor.type = v;
   document.querySelectorAll('.type-opt').forEach(el => el.classList.toggle('sel', el.dataset.value === v));
+  scheduleDraft();
 }
 function renderTagPills() {
   $('#tagPills').innerHTML = editor.tags.map((t, i) =>
     '<span class="tag-pill">#' + esc(t) + '<button data-tagdel="' + i + '" title="移除">×</button></span>'
   ).join('');
+  scheduleDraft();
 }
 function renderPreviews() {
   $('#imgCount').textContent = editor.images.length + ' 张 · 自动压缩后存本地';
   $('#previewGrid').innerHTML = editor.images.map((im, i) =>
     '<div class="preview"><img src="' + esc(im.data) + '" alt="' + esc(im.name || '参考图') + '" data-zoom="' + i + '"><button data-imgdel="' + i + '" title="移除">×</button></div>'
   ).join('');
+  scheduleDraft();
+}
+function newSegment(n) { return { id: uid(), label: '镜头 ' + n, prompt: '', seed: '', extra: '', images: [] }; }
+function collectSegInputs() {
+  document.querySelectorAll('#segmentList [data-seg]').forEach(card => {
+    const i = Number(card.dataset.seg);
+    if (!editor.segments[i]) return;
+    card.querySelectorAll('[data-field]').forEach(el => { editor.segments[i][el.dataset.field] = el.value; });
+  });
+}
+function renderSegments(skipCollect) {
+  if (!skipCollect) collectSegInputs();
+  $('#segCount').textContent = editor.segments.length + ' 段 · 每段可单独配提示词、Seed 和参考图';
+  $('#segmentList').innerHTML = editor.segments.map((s, i) =>
+    '<div class="seg-card" data-seg="' + i + '">' +
+      '<div class="seg-head">' +
+        '<span class="seg-no">' + String(i + 1).padStart(2, '0') + '</span>' +
+        '<input type="text" class="seg-label" data-field="label" value="' + esc(s.label) + '" placeholder="镜头小标题，例：开场特写">' +
+        '<div class="seg-actions">' +
+          '<button data-segact="up" title="上移">↑</button>' +
+          '<button data-segact="down" title="下移">↓</button>' +
+          '<button data-segact="del" title="删除">×</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="seg-body">' +
+        '<textarea data-field="prompt" placeholder="这一段的分镜提示词、画面描述…">' + esc(s.prompt) + '</textarea>' +
+        '<div class="row2">' +
+          '<div class="field"><div class="label">Seed</div><input type="text" data-field="seed" value="' + esc(s.seed) + '" placeholder="该镜头种子"></div>' +
+          '<div class="field"><div class="label">镜头参数</div><input type="text" data-field="extra" value="' + esc(s.extra) + '" placeholder="时长 / 运镜 / 转场"></div>' +
+        '</div>' +
+        '<div class="seg-drop" data-segact="pick">点击 / 拖拽添加本段参考图（' + (s.images || []).length + ' 张）</div>' +
+        '<input type="file" class="seg-file" accept="image/*" multiple hidden>' +
+        ((s.images || []).length ? '<div class="preview-grid seg-previews">' + s.images.map((im, k) =>
+          '<div class="preview"><img src="' + esc(im.data) + '" alt="' + esc(im.name || '参考图') + '" data-segzoom="' + k + '"><button data-segimgdel="' + k + '" title="移除">×</button></div>'
+        ).join('') + '</div>' : '') +
+      '</div>' +
+    '</div>'
+  ).join('');
+  scheduleDraft();
+}
+function addSegment() {
+  collectSegInputs();
+  editor.segments.push(newSegment(editor.segments.length + 1));
+  renderSegments(true);
+  const cards = document.querySelectorAll('#segmentList [data-seg]');
+  const ta = cards.length ? cards[cards.length - 1].querySelector('[data-field="prompt"]') : null;
+  if (ta) ta.focus();
+}
+async function handleSegmentFiles(files, idx) {
+  const imgs = Array.from(files).filter(f => f.type.startsWith('image/'));
+  if (!imgs.length) { toast('请选择图片文件', 'err'); return; }
+  const s = editor.segments[idx]; if (!s) return;
+  for (const f of imgs) {
+    try { s.images.push(await readAndCompress(f)); } catch (e) { toast(f.name + ' 读取失败', 'err'); }
+  }
+  renderSegments();
+  toast('已给第 ' + (idx + 1) + ' 段添加 ' + imgs.length + ' 张参考图');
 }
 function openEditor(id) {
+  suppressDraft = true;
+  closeConfirm();
   editor.id = id || null;
   const it = id ? state.items.find(x => x.id === id) : null;
   editor.images = it ? (it.images || []).map(im => ({ ...im })) : [];
   editor.tags = it ? (it.tags || []).slice() : [];
+  editor.segments = it ? normalizeSegments(it.segments).map(s => Object.assign({}, s, { images: s.images.map(im => ({ ...im })) })) : [];
   $('#drawerTitle').textContent = it ? '编辑提示词' : '新建提示词';
   $('#drawerSub').textContent = it ? '创建于 ' + new Date(it.createdAt).toLocaleString('zh-CN') : '把灵感和参考图一起存下来';
   setType(it ? it.type : 'image');
@@ -913,6 +1288,7 @@ function openEditor(id) {
   $('#fPrompt').value = it ? it.prompt : '';
   $('#fExtra').value = it ? (it.extra || '') : '';
   $('#fTool').value = it ? (it.tool || '') : '';
+  $('#fSeed').value = it ? (it.seed || '') : '';
   $('#fLink').value = it ? (it.link || '') : '';
   $('#fNotes').value = it ? (it.notes || '') : '';
   $('#fFav').checked = it ? !!it.favorite : false;
@@ -921,10 +1297,15 @@ function openEditor(id) {
   updatePromptCount();
   renderTagPills();
   renderPreviews();
+  renderSegments(true);
   $('#overlay').classList.add('open');
+  editorOpenedAt = Date.now();
+  EDITOR_SNAPSHOT = JSON.stringify(collectEditorState());
+  suppressDraft = false;
+  const d = readDraft();
+  if (d && d.id === editor.id && draftHasContent(d.state)) showDraftBar(d); else hideDraftBar();
   setTimeout(() => $('#fTitle').focus(), 80);
 }
-function closeEditor() { $('#overlay').classList.remove('open'); }
 function updatePromptCount() { $('#promptCount').textContent = $('#fPrompt').value.length + ' 字'; }
 
 async function saveForm() {
@@ -937,18 +1318,25 @@ async function saveForm() {
     if (v) { v.split(/[,，]/).map(s => s.trim()).filter(Boolean).forEach(t => { if (!editor.tags.includes(t)) editor.tags.push(t); }); $('#fTagInput').value = ''; renderTagPills(); }
   };
   flushTag();
+  collectSegInputs();
+  const segments = editor.segments.map(s => ({
+    id: s.id || uid(), label: String(s.label || '').trim(), prompt: String(s.prompt || '').trim(),
+    seed: String(s.seed || '').trim(), extra: String(s.extra || '').trim(), images: s.images || []
+  })).filter(s => s.label || s.prompt || s.seed || s.extra || s.images.length);
   const old = editor.id ? state.items.find(x => x.id === editor.id) : null;
   const now = Date.now();
   const item = {
     id: editor.id || uid(),
     type: editor.type,
     title, prompt,
+    seed: $('#fSeed').value.trim(),
     extra: $('#fExtra').value.trim(),
     tool: $('#fTool').value.trim(),
     link: $('#fLink').value.trim(),
     notes: $('#fNotes').value.trim(),
     tags: editor.tags.slice(),
     images: editor.images.slice(),
+    segments,
     favorite: $('#fFav').checked,
     createdAt: old ? old.createdAt : now,
     updatedAt: now
@@ -956,7 +1344,7 @@ async function saveForm() {
   try {
     await DB.put(item);
     if (old) Object.assign(old, item); else state.items.unshift(item);
-    closeEditor(); markDirty(); render();
+    closeEditor(true); markDirty(); render();
     toast(old ? '已更新' : '已保存到本地');
   } catch (e) { toast('保存失败：' + e.message, 'err'); }
 }
@@ -998,18 +1386,28 @@ async function handleFiles(files) {
 }
 
 /* ============ Import / Export ============ */
+function normalizeSegments(list) {
+  if (!Array.isArray(list)) return [];
+  return list.filter(s => s && (s.prompt || s.label || s.seed || s.extra || (s.images || []).length)).map(s => ({
+    id: s.id || uid(), label: String(s.label || ''), prompt: String(s.prompt || ''),
+    seed: String(s.seed == null ? '' : s.seed), extra: String(s.extra || ''),
+    images: Array.isArray(s.images) ? s.images : []
+  }));
+}
 function normalizeItems(list) {
   if (!Array.isArray(list)) throw new Error('文件格式不正确');
   return list.filter(i => i && i.title && i.prompt).map(i => ({
     id: i.id || uid(), type: i.type === 'video' ? 'video' : 'image',
     title: String(i.title), prompt: String(i.prompt),
+    seed: String(i.seed == null ? '' : i.seed),
     extra: i.extra || '', tool: i.tool || '', link: i.link || '', notes: i.notes || '',
     tags: Array.isArray(i.tags) ? i.tags : [], images: Array.isArray(i.images) ? i.images : [],
+    segments: normalizeSegments(i.segments),
     favorite: !!i.favorite, createdAt: i.createdAt || Date.now(), updatedAt: i.updatedAt || Date.now()
   }));
 }
 function exportData() {
-  const payload = { app: 'Prompt Vault', version: 1, exportedAt: new Date().toISOString(), items: state.items };
+  const payload = { app: 'Prompt Vault', version: 2, exportedAt: new Date().toISOString(), items: state.items };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -1034,7 +1432,7 @@ async function importData(file) {
    浏览器本地库是离线工作副本；发布 = 用 GitHub REST API 提交一次 commit。 */
 const CLOUD = {
   key: 'prompt_vault_cloud_cfg',
-  cfg: { owner: '', repo: '', branch: 'main', path: 'data/prompts.json', token: '', autoLoad: true, includeImages: true },
+  cfg: { owner: '', repo: '', branch: 'main', path: 'data/prompts.json', pagePath: 'index.html', token: '', autoLoad: true, includeImages: true },
   dirty: false, status: 'off', info: '未读取仓库数据'
 };
 function loadCloudCfg() {
@@ -1053,8 +1451,10 @@ function cloudUrl() {
   try { return new URL(p.replace(/^\.\//, ''), document.baseURI).toString(); } catch (e) { return p; }
 }
 function buildPayload() {
-  const items = CLOUD.cfg.includeImages ? state.items : state.items.map(i => Object.assign({}, i, { images: [] }));
-  return { app: 'Prompt Vault', version: 1, exportedAt: new Date().toISOString(), items };
+  const items = CLOUD.cfg.includeImages ? state.items : state.items.map(i => Object.assign({}, i, {
+    images: [], segments: (i.segments || []).map(s => Object.assign({}, s, { images: [] }))
+  }));
+  return { app: 'Prompt Vault', version: 2, exportedAt: new Date().toISOString(), items };
 }
 function payloadText() { return JSON.stringify(buildPayload(), null, 2); }
 function fmtSize(n) { return n < 1048576 ? (n / 1024).toFixed(1) + ' KB' : (n / 1048576).toFixed(2) + ' MB'; }
@@ -1113,38 +1513,63 @@ function utf8ToBase64(str) {
   for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
   return btoa(bin);
 }
-async function publishCloud() {
+function ghApiBase(path) {
   const c = CLOUD.cfg;
-  if (!c.owner || !c.repo || !c.token) { toast('请先填写仓库所有者、仓库名和访问令牌', 'err'); return; }
-  const txt = payloadText();
-  const size = new Blob([txt]).size;
-  if (size > 8 * 1048576 && !confirm('数据文件约 ' + fmtSize(size) + '，过大会拖慢页面加载。仍要发布吗？')) return;
-  const path = (c.path || 'data/prompts.json').replace(/^\/+/, '');
-  const branch = c.branch || 'main';
-  const base = 'https://api.github.com/repos/' + encodeURIComponent(c.owner.trim()) + '/' + encodeURIComponent(c.repo.trim()) + '/contents/' + path.split('/').map(encodeURIComponent).join('/');
-  const headers = {
+  return 'https://api.github.com/repos/' + encodeURIComponent(c.owner.trim()) + '/' + encodeURIComponent(c.repo.trim()) +
+    '/contents/' + path.replace(/^\/+/, '').split('/').map(encodeURIComponent).join('/');
+}
+function ghHeaders() {
+  return {
     'Accept': 'application/vnd.github+json',
-    'Authorization': 'Bearer ' + c.token.trim(),
+    'Authorization': 'Bearer ' + CLOUD.cfg.token.trim(),
     'X-GitHub-Api-Version': '2022-11-28',
     'Content-Type': 'application/json'
   };
+}
+async function githubReadFile(path) {
+  const c = CLOUD.cfg;
+  if (!c.owner || !c.repo || !c.token) throw new Error('请先填写仓库所有者、仓库名和访问令牌');
+  const base = ghApiBase(path);
+  const branch = c.branch || 'main';
+  const g = await fetch(base + '?ref=' + encodeURIComponent(branch) + '&t=' + Date.now(), { headers: ghHeaders() });
+  if (g.status === 404) return null;
+  if (g.status === 401) throw new Error('令牌无效或已过期（401）');
+  if (g.status === 403) throw new Error('没有访问权限（403），检查令牌的 Contents 权限与仓库范围');
+  if (!g.ok) throw new Error('读取仓库失败：HTTP ' + g.status);
+  const j = await g.json();
+  let content = null;
+  try {
+    content = new TextDecoder().decode(Uint8Array.from(atob(String(j.content || '').replace(/\s/g, '')), ch => ch.charCodeAt(0)));
+  } catch (e) {}
+  return { sha: j.sha, content, size: j.size || 0 };
+}
+async function githubPutFile(path, content, message, preRead) {
+  const c = CLOUD.cfg;
+  if (!c.owner || !c.repo || !c.token) throw new Error('请先填写仓库所有者、仓库名和访问令牌');
+  const base = ghApiBase(path);
+  const branch = c.branch || 'main';
+  const headers = ghHeaders();
+  let sha = null;
+  if (preRead !== undefined) sha = preRead ? preRead.sha : null;
+  else { const info = await githubReadFile(path); if (info) sha = info.sha; }
+  const body = { message, content: utf8ToBase64(content), branch };
+  if (sha) body.sha = sha;
+  const p = await fetch(base, { method: 'PUT', headers, body: JSON.stringify(body) });
+  let pj = {};
+  try { pj = await p.json(); } catch (e) {}
+  if (!p.ok) throw new Error(pj.message || ('HTTP ' + p.status));
+  return { size: new Blob([content]).size, commit: (pj.commit && pj.commit.sha) ? String(pj.commit.sha).slice(0, 7) : '' };
+}
+async function publishCloud() {
+  const c = CLOUD.cfg;
+  const txt = payloadText();
+  const size = new Blob([txt]).size;
+  if (size > 8 * 1048576 && !confirm('数据文件约 ' + fmtSize(size) + '，过大会拖慢页面加载。仍要发布吗？')) return;
   const btn = $('#cPublish');
   const oldText = btn.textContent;
   btn.textContent = '发布中…'; btn.disabled = true;
   try {
-    let sha = null;
-    const g = await fetch(base + '?ref=' + encodeURIComponent(branch) + '&t=' + Date.now(), { headers });
-    if (g.ok) { const j = await g.json(); sha = j.sha; }
-    else if (g.status === 401) throw new Error('令牌无效或已过期（401）');
-    else if (g.status !== 404) throw new Error('读取仓库失败：HTTP ' + g.status);
-    const body = { message: 'Update prompt vault data (' + new Date().toISOString().slice(0, 16).replace('T', ' ') + ')', content: utf8ToBase64(txt), branch };
-    if (sha) body.sha = sha;
-    const p = await fetch(base, { method: 'PUT', headers, body: JSON.stringify(body) });
-    if (!p.ok) {
-      let msg = 'HTTP ' + p.status;
-      try { const e = await p.json(); msg = e.message || msg; } catch (err) {}
-      throw new Error(msg);
-    }
+    await githubPutFile(c.path || 'data/prompts.json', txt, 'Update prompt vault data (' + new Date().toISOString().slice(0, 16).replace('T', ' ') + ')');
     CLOUD.dirty = false; CLOUD.status = 'synced';
     CLOUD.info = '已提交 ' + fmtSize(size) + '，Pages 约 1–2 分钟后更新';
     updateCloudUI();
@@ -1154,17 +1579,98 @@ async function publishCloud() {
     toast('发布失败：' + e.message, 'err');
   } finally { btn.textContent = oldText; btn.disabled = false; }
 }
+let pickedHtml = null;
+function setPageLog(html) { $('#cHtmlInfo').innerHTML = html; }
+async function handleHtmlFile(f) {
+  if (!f) return;
+  try {
+    const t = await f.text();
+    pickedHtml = { name: f.name, text: t };
+    const isHtml = /<!doctype html|<html[\s>]/i.test(t.slice(0, 4000));
+    const isApp = t.includes('const APP_VERSION');
+    setPageLog('已选择 <b>' + esc(f.name) + '</b> · ' + fmtSize(new Blob([t]).size) + '<br>' +
+      (isHtml ? '<span class="good">HTML 格式 ✓</span>' : '<span class="bad">不是 HTML 文件</span>') + ' · ' +
+      (isApp ? '<span class="good">已识别为本工具主文件 ✓</span>' : '<span class="bad">未找到版本标记，可能不是本工具的 index.html</span>') +
+      '<br>确认无误后点「上传所选文件」。');
+  } catch (e) { setPageLog('<span class="bad">读取文件失败：' + esc(e.message) + '</span>'); }
+}
+async function syncIndexToPages(text, label) {
+  const c = CLOUD.cfg;
+  const path = c.pagePath || 'index.html';
+  if (!/<!doctype html|<html[\s>]/i.test(text.slice(0, 4000))) {
+    setPageLog('<span class="bad">校验失败</span>：所选内容不是 HTML 页面文件。');
+    toast('所选内容不是 HTML 页面文件', 'err'); return false;
+  }
+  if (!c.owner || !c.repo || !c.token) {
+    setPageLog('<span class="bad">缺少配置</span>：请先填写仓库所有者、仓库名和访问令牌。');
+    toast('请先填写仓库信息与令牌', 'err'); return false;
+  }
+  const size = new Blob([text]).size;
+  setPageLog('正在读取仓库里的 <b>' + esc(path) + '</b> 并与待提交内容比对…');
+  let pre;
+  try { pre = await githubReadFile(path); }
+  catch (e) {
+    setPageLog('<span class="bad">读取仓库失败</span>：' + esc(e.message) + '<br>排查：令牌是否有效且授予该仓库 Contents 读写；仓库名与分支 <b>' + esc(c.branch || 'main') + '</b> 是否正确。');
+    toast('读取仓库失败：' + e.message, 'err'); return false;
+  }
+  if (pre && pre.content === text) {
+    setPageLog('<span class="bad">没有产生更新</span>：待提交内容与仓库里的 <b>' + esc(path) + '</b> 完全一致（' + fmtSize(size) + '），已跳过提交。<br>常见原因：在线上页面点了「同步当前页面源码」，推回去的还是线上已有的版本；或者选的本地文件就是仓库里那一份。<br><b>请改用「把本地 index.html 拖到这里」上传本地新文件。</b>');
+    toast('内容与仓库一致，未提交', 'err');
+    return false;
+  }
+  setPageLog('仓库现有：' + (pre ? fmtSize(pre.size) : '文件不存在，将新建') + ' → 待提交：' + fmtSize(size) + '。等待确认…');
+  if (!confirm('把 ' + label + '（' + fmtSize(size) + '）提交为仓库的 ' + path + '，覆盖线上页面。继续吗？')) {
+    setPageLog('已取消，未提交。'); return false;
+  }
+  setPageLog('正在提交 ' + fmtSize(size) + ' 到 <b>' + esc(path) + '</b>…');
+  try {
+    const res = await githubPutFile(path, text, 'Update ' + path + ' (Prompt Vault)', pre);
+    setPageLog('<span class="good">提交成功</span> · ' + fmtSize(res.size) + ' · commit <b>' + esc(res.commit || '-') + '</b><br>已写入 <b>' + esc(path) + '</b>，Pages 约 1–2 分钟后重新构建生效。');
+    REMOTE_VERSION = extractVersion(text) || APP_VERSION;
+    renderVersionCompare('<span class="good">已提交新版</span>：仓库版本已更新为 v' + esc(REMOTE_VERSION) + '，Pages 构建完成后线上生效。' +
+      (compareVer(REMOTE_VERSION, APP_VERSION) !== 0 ? '<br><b>注意</b>：提交的文件版本与当前页面版本不同，请确认上传的是本地最新 index.html。' : ''));
+    toast('页面已提交，等待 Pages 重新构建');
+    return true;
+  } catch (e) {
+    setPageLog('<span class="bad">提交失败</span>：' + esc(e.message) + '<br>排查：① 令牌是否授予该仓库 <b>Contents: Read and Write</b>；② 分支 <b>' + esc(c.branch || 'main') + '</b> 是否有保护规则；③ 页面路径 <b>' + esc(path) + '</b> 是否正确（Pages 从 /docs 发布时填 docs/index.html）。');
+    toast('上传失败：' + e.message, 'err');
+    return false;
+  }
+}
+async function syncCurrentPageSource() {
+  if (location.protocol === 'file:') {
+    setPageLog('<span class="bad">当前是本地文件模式</span>，浏览器不允许读取自身源码。请改用「把本地 index.html 拖到这里」。');
+    toast('请改用选择本地文件', 'err'); return;
+  }
+  setPageLog('正在读取当前页面源码…');
+  try {
+    const url = location.origin + location.pathname + '?t=' + Date.now();
+    const r = await fetch(url, { cache: 'no-store' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    await syncIndexToPages(await r.text(), '当前页面源码');
+  } catch (e) {
+    setPageLog('<span class="bad">读取当前页面源码失败</span>：' + esc(e.message) + '<br>请改用「把本地 index.html 拖到这里」选择本地文件。');
+    toast('无法读取当前页面源码', 'err');
+  }
+}
 function fillCloudForm() {
   $('#cOwner').value = CLOUD.cfg.owner; $('#cRepo').value = CLOUD.cfg.repo;
   $('#cBranch').value = CLOUD.cfg.branch; $('#cPath').value = CLOUD.cfg.path;
+  $('#cPagePath').value = CLOUD.cfg.pagePath || 'index.html';
   $('#cToken').value = CLOUD.cfg.token;
   $('#cAuto').checked = !!CLOUD.cfg.autoLoad; $('#cImages').checked = !!CLOUD.cfg.includeImages;
+  if (!$('#cHtmlInfo').dataset.init) {
+    $('#cHtmlInfo').innerHTML = '当前页面版本 <b>' + esc(APP_VERSION) + '</b>。未选择文件。<br>推荐把本地新版 index.html 拖到上方区域后点「上传所选文件」。';
+    $('#cHtmlInfo').dataset.init = '1';
+  }
+  renderVersionCompare();
   updateCloudUI();
 }
 function readCloudForm() {
   CLOUD.cfg.owner = $('#cOwner').value.trim(); CLOUD.cfg.repo = $('#cRepo').value.trim();
   CLOUD.cfg.branch = $('#cBranch').value.trim() || 'main';
   CLOUD.cfg.path = $('#cPath').value.trim() || 'data/prompts.json';
+  CLOUD.cfg.pagePath = $('#cPagePath').value.trim() || 'index.html';
   CLOUD.cfg.token = $('#cToken').value.trim();
   CLOUD.cfg.autoLoad = $('#cAuto').checked; CLOUD.cfg.includeImages = $('#cImages').checked;
 }
@@ -1177,7 +1683,10 @@ function tokenCreateUrl() {
   });
   return 'https://github.com/settings/personal-access-tokens/new?' + q.toString();
 }
-function openCloudSettings() { closeEditor(); fillCloudForm(); $('#cloudOverlay').classList.add('open'); }
+function openCloudSettings() {
+  if ($('#overlay').classList.contains('open')) return;
+  fillCloudForm(); $('#cloudOverlay').classList.add('open');
+}
 function closeCloudSettings() { $('#cloudOverlay').classList.remove('open'); }
 
 /* ============ Sample data ============ */
@@ -1191,19 +1700,26 @@ async function loadDemo() {
     {
       id: uid(), type: 'image', title: '赛博城市 · 夜景主视觉',
       prompt: '雨后的未来都市街道，霓虹灯牌倒映在湿漉漉的路面，青紫与洋红撞色，远景有悬浮车流光轨，行人撑透明雨伞的背影，电影感广角构图，体积雾，超高细节，8k，胶片颗粒',
+      seed: '284915730',
       extra: '--ar 16:9 --stylize 250 ；负向词：文字、水印、畸形手指',
-      tool: 'Midjourney', link: '', notes: '客户反馈：色调偏冷一点更好，下次试试减少洋红。',
-      tags: ['赛博朋克', '夜景', '主视觉'], favorite: true,
+      tool: 'Midjourney', link: '', notes: '客户反馈：色调偏冷一点更好，下次试试减少洋红。固定 Seed 可以稳定复现这一版。',
+      tags: ['赛博朋克', '夜景', '主视觉'], favorite: true, segments: [],
       images: [{ name: '参考-色调.svg', data: svgPic('#3b2a6b', '#12a4b8', 'Neon City / Mood') }, { name: '参考-构图.svg', data: svgPic('#7a2c68', '#28245c', 'Composition Ref') }],
       createdAt: now - 86400000 * 3, updatedAt: now - 3600000
     },
     {
       id: uid(), type: 'video', title: '产品开箱 · 8 秒短片',
-      prompt: '特写镜头：一只手缓缓揭开磨砂黑包装盒，柔和顶光扫过产品金属边缘，微距景深，背景为浅灰无缝渐变，镜头缓慢推近并轻微上摇，最后 1 秒定格露出 logo，干净的商业广告质感',
-      extra: '8s，24fps，慢推镜 + 上摇，无字幕，避免镜头抖动',
-      tool: '可灵 Kling', link: '', notes: '需要同步准备一版竖屏 9:16 的分镜。',
+      prompt: '整体调性：极简商业广告，浅灰无缝背景，柔和顶光，磨砂黑包装与金属高光，干净、克制、有质感。全片无字幕，避免镜头抖动。',
+      seed: '771204',
+      extra: '总时长 8s，24fps，竖屏 9:16 与横屏 16:9 各出一版',
+      tool: '可灵 Kling', link: '', notes: '分镜里每段单独写了提示词、Seed 和参考图，导出时会一起带上。',
       tags: ['产品', '广告', '分镜'], favorite: false,
       images: [{ name: '参考-光影.svg', data: svgPic('#1d3b52', '#4bb6c9', 'Lighting Ref') }],
+      segments: [
+        { id: uid(), label: '镜头 1 · 揭盒特写', prompt: '微距特写，一只手缓缓揭开磨砂黑盒盖，指尖与盒盖边缘的摩擦，柔和顶光扫过，浅景深', seed: '771204', extra: '0-3s，慢推镜，35mm', images: [{ name: '镜头1-构图.svg', data: svgPic('#2b3f55', '#6fa8bd', 'Shot 01 / Unbox') }] },
+        { id: uid(), label: '镜头 2 · 产品亮相', prompt: '盒盖完全打开，产品从盒中缓缓升起，金属边缘掠过一道高光，背景保持纯净浅灰', seed: '771205', extra: '3-6s，轻微上摇，固定机位', images: [] },
+        { id: uid(), label: '镜头 3 · Logo 定格', prompt: '镜头定格在产品正面，logo 清晰可见，光线稳定，画面留白用于后期加字', seed: '771206', extra: '6-8s，定格，无运镜', images: [] }
+      ],
       createdAt: now - 86400000, updatedAt: now - 86400000 + 7200000
     }
   ];
@@ -1216,6 +1732,8 @@ async function loadDemo() {
 /* ============ Events ============ */
 function bindEvents() {
   $('#cloudBtn').onclick = openCloudSettings;
+  $('#appVer').onclick = () => { openCloudSettings(); checkRemoteVersion(); };
+  $('#cCheckVer').onclick = () => { readCloudForm(); saveCloudCfg(); checkRemoteVersion(); };
   $('#cloudCloseX').onclick = closeCloudSettings;
   $('#cClose').onclick = closeCloudSettings;
   $('#cloudOverlay').onclick = (e) => { if (e.target === $('#cloudOverlay')) closeCloudSettings(); };
@@ -1225,11 +1743,47 @@ function bindEvents() {
   $('#cPublish').onclick = () => { readCloudForm(); saveCloudCfg(); publishCloud(); };
   $('#cImages').onchange = () => { readCloudForm(); updateCloudUI(); };
   $('#cTokenLink').onclick = (e) => { e.preventDefault(); window.open(tokenCreateUrl(), '_blank', 'noopener'); };
+  $('#cSyncCurrent').onclick = () => { readCloudForm(); saveCloudCfg(); syncCurrentPageSource(); };
+  $('#cHtmlFile').onchange = (e) => { handleHtmlFile(e.target.files[0]); e.target.value = ''; };
+  $('#cPageDrop').onclick = () => $('#cHtmlFile').click();
+  ['dragenter', 'dragover'].forEach(ev => $('#cPageDrop').addEventListener(ev, (e) => { e.preventDefault(); $('#cPageDrop').classList.add('drag'); }));
+  ['dragleave', 'drop'].forEach(ev => $('#cPageDrop').addEventListener(ev, (e) => { e.preventDefault(); $('#cPageDrop').classList.remove('drag'); }));
+  $('#cPageDrop').addEventListener('drop', (e) => {
+    const files = Array.from(e.dataTransfer.files || []);
+    handleHtmlFile(files.find(x => /\.html?$/i.test(x.name)) || files[0]);
+  });
+  $('#cUploadHtml').onclick = async () => {
+    readCloudForm(); saveCloudCfg();
+    if (!pickedHtml) {
+      setPageLog('<span class="bad">还没有选择文件</span>：先把本地 index.html 拖到上方区域，或点击该区域选择文件。');
+      toast('请先选择本地 index.html 文件', 'err'); return;
+    }
+    await syncIndexToPages(pickedHtml.text, pickedHtml.name);
+  };
   $('#newBtn').onclick = () => openEditor();
-  $('#closeDrawer').onclick = closeEditor;
-  $('#cancelBtn').onclick = closeEditor;
+  $('#closeDrawer').onclick = requestCloseEditor;
+  $('#cancelBtn').onclick = requestCloseEditor;
   $('#saveBtn').onclick = saveForm;
-  $('#overlay').onclick = (e) => { if (e.target === $('#overlay')) closeEditor(); };
+  $('#overlay').onclick = (e) => {
+    if (e.target !== $('#overlay')) return;
+    if (Date.now() - editorOpenedAt < 800) return;
+    const r = $('.drawer').getBoundingClientRect();
+    if (e.clientX >= r.left - 28) return;
+    requestCloseEditor();
+  };
+  $('#cfKeep').onclick = closeConfirm;
+  $('#cfDiscard').onclick = () => { closeConfirm(); closeEditor(true); toast('已关闭，未保存的内容已丢弃'); };
+  $('#cfSave').onclick = async () => { closeConfirm(); await saveForm(); };
+  $('#confirmLayer').onclick = (e) => { if (e.target === $('#confirmLayer')) closeConfirm(); };
+  $('#draftRestore').onclick = () => {
+    if (!PENDING_DRAFT) { hideDraftBar(); return; }
+    if (editorHasChanges() && !confirm('恢复草稿会覆盖当前填写的内容，继续吗？')) return;
+    applyEditorState(PENDING_DRAFT.state);
+    hideDraftBar(); toast('草稿已恢复');
+  };
+  $('#draftDrop').onclick = () => { clearDraft(); hideDraftBar(); toast('草稿已丢弃'); };
+  $('.drawer').addEventListener('input', scheduleDraft);
+  $('.drawer').addEventListener('change', scheduleDraft);
   $('#themeBtn').onclick = () => { state.theme = state.theme === 'dark' ? 'light' : 'dark'; applyTheme(); savePrefs(); };
   $('#exportBtn').onclick = exportData;
   $('#importBtn').onclick = () => {
@@ -1277,7 +1831,7 @@ function bindEvents() {
     const actEl = e.target.closest('[data-act]');
     const act = actEl ? actEl.dataset.act : 'edit';
     if (act === 'link') { e.stopPropagation(); return; }
-    if (act === 'copy') { e.stopPropagation(); copyText(it.prompt); return; }
+    if (act === 'copy') { e.stopPropagation(); copyText(fullPromptText(it)); return; }
     if (act === 'zoom') { e.stopPropagation(); $('#lightboxImg').src = actEl.dataset.src; $('#lightbox').classList.add('open'); return; }
     if (act === 'fav') {
       e.stopPropagation(); it.favorite = !it.favorite; it.updatedAt = Date.now();
@@ -1298,7 +1852,7 @@ function bindEvents() {
     const it = state.items.find(x => x.id === editor.id); if (!it) return;
     if (!confirm('删除「' + it.title + '」？此操作不可撤销。')) return;
     await DB.remove(editor.id); state.items = state.items.filter(x => x.id !== editor.id);
-    closeEditor(); markDirty(); render(); toast('已删除');
+    closeEditor(true); markDirty(); render(); toast('已删除');
   };
 
   const tagInput = $('#fTagInput');
@@ -1331,22 +1885,73 @@ function bindEvents() {
     if (zoom) { $('#lightboxImg').src = editor.images[Number(zoom.dataset.zoom)].data; $('#lightbox').classList.add('open'); }
   };
 
+  $('#addSegBtn').onclick = addSegment;
+  const segList = $('#segmentList');
+  segList.oninput = (e) => {
+    const el = e.target.closest('[data-field]'); if (!el) return;
+    const card = el.closest('[data-seg]'); if (!card) return;
+    const s = editor.segments[Number(card.dataset.seg)];
+    if (s) s[el.dataset.field] = el.value;
+  };
+  segList.onclick = (e) => {
+    const card = e.target.closest('[data-seg]'); if (!card) return;
+    const i = Number(card.dataset.seg);
+    const imgDel = e.target.closest('[data-segimgdel]');
+    if (imgDel) { collectSegInputs(); editor.segments[i].images.splice(Number(imgDel.dataset.segimgdel), 1); renderSegments(true); return; }
+    const zoom = e.target.closest('[data-segzoom]');
+    if (zoom) { $('#lightboxImg').src = editor.segments[i].images[Number(zoom.dataset.segzoom)].data; $('#lightbox').classList.add('open'); return; }
+    const act = e.target.closest('[data-segact]'); if (!act) return;
+    if (act.dataset.segact === 'pick') { card.querySelector('.seg-file').click(); return; }
+    collectSegInputs();
+    const a = act.dataset.segact;
+    if (a === 'del') { if (!confirm('删除第 ' + (i + 1) + ' 段分镜？')) return; editor.segments.splice(i, 1); }
+    else if (a === 'up' && i > 0) { const t = editor.segments[i]; editor.segments[i] = editor.segments[i - 1]; editor.segments[i - 1] = t; }
+    else if (a === 'down' && i < editor.segments.length - 1) { const t = editor.segments[i]; editor.segments[i] = editor.segments[i + 1]; editor.segments[i + 1] = t; }
+    renderSegments(true);
+  };
+  segList.onchange = (e) => {
+    const input = e.target;
+    if (!input.classList.contains('seg-file')) return;
+    const card = input.closest('[data-seg]');
+    if (card && input.files.length) handleSegmentFiles(input.files, Number(card.dataset.seg));
+    input.value = '';
+  };
+  ['dragenter', 'dragover'].forEach(ev => segList.addEventListener(ev, (e) => {
+    const drop = e.target.closest('.seg-drop'); if (!drop) return;
+    e.preventDefault(); drop.classList.add('drag');
+  }));
+  ['dragleave', 'drop'].forEach(ev => segList.addEventListener(ev, (e) => {
+    const drop = e.target.closest('.seg-drop'); if (!drop) return;
+    e.preventDefault(); drop.classList.remove('drag');
+  }));
+  segList.addEventListener('drop', (e) => {
+    const card = e.target.closest('[data-seg]');
+    if (card && e.dataTransfer.files.length) { e.preventDefault(); handleSegmentFiles(e.dataTransfer.files, Number(card.dataset.seg)); }
+  });
+
   document.addEventListener('paste', (e) => {
     if (!$('#overlay').classList.contains('open')) return;
     if (e.target && ['INPUT', 'TEXTAREA'].includes(e.target.tagName) && !(e.clipboardData && e.clipboardData.files.length)) return;
     const files = Array.from((e.clipboardData || {}).files || []).filter(f => f.type.startsWith('image/'));
-    if (files.length) { e.preventDefault(); handleFiles(files); }
+    if (files.length) {
+      e.preventDefault();
+      const segCard = e.target && e.target.closest ? e.target.closest('[data-seg]') : null;
+      if (segCard) handleSegmentFiles(files, Number(segCard.dataset.seg));
+      else handleFiles(files);
+    }
   });
   document.addEventListener('keydown', (e) => {
     const open = $('#overlay').classList.contains('open');
     const cloudOpen = $('#cloudOverlay').classList.contains('open');
+    const confirmOpen = $('#confirmLayer').classList.contains('open');
     if (e.key === 'Escape') {
-      if ($('#lightbox').classList.contains('open')) $('#lightbox').classList.remove('open');
+      if (confirmOpen) closeConfirm();
+      else if ($('#lightbox').classList.contains('open')) $('#lightbox').classList.remove('open');
       else if (cloudOpen) closeCloudSettings();
-      else if (open) closeEditor();
+      else if (open) requestCloseEditor();
       return;
     }
-    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && open) { e.preventDefault(); saveForm(); return; }
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && open) { e.preventDefault(); closeConfirm(); saveForm(); return; }
     if (!open && !cloudOpen && e.key === 'n' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); openEditor(); }
     if (!open && !cloudOpen && e.key === '/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); $('#search').focus(); }
   });
@@ -1363,6 +1968,7 @@ function bindEvents() {
   } catch (e) { toast('读取数据失败：' + e.message, 'err'); }
   bindEvents();
   render();
+  renderVersionCompare();
   updateCloudUI();
   pullCloud(false);
   if (DB.mode !== 'idb') {
