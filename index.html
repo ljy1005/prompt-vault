@@ -278,11 +278,11 @@ select {
 .label { font-size: 12px; font-weight: 600; color: var(--text-2); display: flex; align-items: center; gap: 6px; }
 .label .req { color: var(--danger); }
 .label .tip { margin-left: auto; font-weight: 400; color: var(--muted); font-size: 11px; }
-input[type="text"], input[type="url"], textarea, .fake-input {
+input[type="text"], input[type="url"], input[type="password"], textarea, .fake-input {
   width: 100%; background: var(--input); border: 1px solid var(--border); border-radius: 9px;
   padding: 10px 12px; font-size: 13px; line-height: 1.6; resize: vertical;
 }
-input[type="text"]:focus, input[type="url"]:focus, textarea:focus { border-color: var(--accent); outline: none; }
+input[type="text"]:focus, input[type="url"]:focus, input[type="password"]:focus, textarea:focus { border-color: var(--accent); outline: none; }
 textarea { min-height: 108px; }
 textarea.tall { min-height: 150px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "PingFang SC", monospace; font-size: 12.5px; }
 input::placeholder, textarea::placeholder { color: var(--muted); }
@@ -346,6 +346,27 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
 .toast.ok svg { color: var(--ok); } .toast.err svg { color: var(--danger); }
 .toast svg { width: 15px; height: 15px; }
 
+/* ---------- Cloud sync ---------- */
+.cloud-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); display: inline-block; flex: 0 0 auto; }
+.cloud-dot.on { background: var(--ok); box-shadow: 0 0 0 3px rgba(74,222,128,.16); }
+.cloud-dot.warn { background: var(--star); box-shadow: 0 0 0 3px rgba(245,185,66,.16); }
+.cloud-dot.err { background: var(--danger); box-shadow: 0 0 0 3px rgba(244,114,114,.16); }
+.cloud-note {
+  font-size: 12px; line-height: 1.75; color: var(--text-2); background: var(--input);
+  border: 1px solid var(--border); border-radius: 9px; padding: 11px 12px;
+}
+.cloud-note b { color: var(--text); }
+.cloud-note.warn { border-color: rgba(245,185,66,.38); background: rgba(245,185,66,.07); }
+.cloud-note ol { margin: 7px 0 0; padding-left: 19px; }
+.cloud-note li { margin: 2px 0; }
+.cloud-status {
+  display: flex; align-items: center; gap: 9px; font-size: 12px; color: var(--text-2);
+  padding: 10px 12px; border-radius: 9px; background: var(--panel-2); border: 1px solid var(--border);
+}
+.cloud-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cloud-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.cloud-size { font-size: 11px; color: var(--muted); }
+
 @media (max-width: 900px) {
   .layout { grid-template-columns: 1fr; height: auto; min-height: calc(100vh - 66px); }
   body { overflow: auto; }
@@ -375,6 +396,9 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
   </div>
   <div class="stats" id="stats"></div>
   <div class="top-actions">
+    <button class="btn" id="cloudBtn" title="GitHub Pages 数据同步设置">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h10a4 4 0 0 0 .7-7.94A6 6 0 0 0 6.2 8.5 4.5 4.5 0 0 0 7 18Z"/><path d="M12 12v6m0 0-2-2m2 2 2-2"/></svg>云同步 <span class="cloud-dot" id="cloudDot"></span>
+    </button>
     <button class="icon-btn" id="themeBtn" title="切换主题">
       <svg class="icon" id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8Z"/></svg>
     </button>
@@ -534,6 +558,46 @@ input::placeholder, textarea::placeholder { color: var(--muted); }
   </div>
 </div>
 
+<!-- Cloud sync drawer -->
+<div class="overlay" id="cloudOverlay">
+  <div class="drawer" role="dialog" aria-modal="true" aria-label="云同步设置">
+    <div class="drawer-head">
+      <div><h2>把数据放到 GitHub Pages</h2><div class="sub">仓库里的 data/prompts.json 就是你的数据文件</div></div>
+      <div class="spacer"></div>
+      <button class="icon-btn" id="cloudCloseX" title="关闭">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="drawer-body">
+      <div class="cloud-status"><span class="cloud-dot" id="cloudDot2"></span><span id="cloudStatusText">未配置</span></div>
+      <div class="cloud-note">GitHub Pages 只托管静态文件，<b>没有数据库，网页也不能直接写服务器</b>。做法是：把数据做成一个 JSON 文件放进仓库，网页打开时读取它；填了访问令牌后，还能在网页里一键提交回仓库。</div>
+      <div class="cloud-row">
+        <div class="field"><div class="label">仓库所有者</div><input type="text" id="cOwner" placeholder="你的 GitHub 用户名"></div>
+        <div class="field"><div class="label">仓库名</div><input type="text" id="cRepo" placeholder="例：prompt-vault"></div>
+      </div>
+      <div class="cloud-row">
+        <div class="field"><div class="label">分支</div><input type="text" id="cBranch" placeholder="main"></div>
+        <div class="field"><div class="label">数据文件路径</div><input type="text" id="cPath" placeholder="data/prompts.json"></div>
+      </div>
+      <div class="field">
+        <div class="label">Fine-grained 访问令牌 <span class="tip">只授予该仓库 Contents 读写</span></div>
+        <input type="password" id="cToken" placeholder="github_pat_…（仅「发布」需要，留空也能读取）" autocomplete="off">
+      </div>
+      <label class="switch-row"><input type="checkbox" id="cAuto"> 打开页面时自动读取仓库数据</label>
+      <label class="switch-row"><input type="checkbox" id="cImages"> 发布时包含参考图（关闭则只发文字，体积更小）</label>
+      <div class="cloud-size" id="cSize"></div>
+      <div class="cloud-actions">
+        <button class="btn" id="cPull">从仓库读取</button>
+        <button class="btn" id="cExport">导出发布包</button>
+        <button class="btn primary" id="cPublish">发布到 GitHub</button>
+      </div>
+      <div class="cloud-note warn"><b>请注意</b><br>公开仓库 + Pages 意味着<b>提示词和参考图全网可读</b>，不要放敏感内容。令牌只保存在这台设备的浏览器里，不会写进仓库；共用电脑或页面存在恶意脚本时仍有泄漏风险，请使用限定单仓库的 fine-grained 令牌。写入后 Pages 需要重新构建，通常 1–2 分钟后生效。</div>
+      <div class="cloud-note"><b>部署步骤</b><ol><li>把 index.html 放到仓库根目录，Settings → Pages → 从 main 分支 /root 发布。</li><li>在仓库根目录加一个空的 .nojekyll 文件（跳过 Jekyll，避免静态文件被额外处理）。</li><li>点「发布到 GitHub」自动生成 data/prompts.json；或点「导出发布包」，把 prompts.json 手动放进仓库再 push。</li><li>之后任何设备打开同一个网址，都会读到同一份数据。</li></ol></div>
+    </div>
+    <div class="drawer-foot"><div class="spacer"></div><span class="hint">令牌不会上传</span><button class="btn" id="cClose">关闭</button><button class="btn primary" id="cSave">保存设置</button></div>
+  </div>
+</div>
+
 <div class="lightbox" id="lightbox"><img id="lightboxImg" alt="参考图预览"></div>
 <div class="toast" id="toast"></div>
 
@@ -656,6 +720,11 @@ const DB = {
       items.forEach(i => s.put(i));
       t.oncomplete = () => res(); t.onerror = () => rej(t.error);
     });
+  },
+  async clearAll() {
+    await this.ready;
+    if (this.mode !== 'idb') { this.cache = []; this.persist(); return; }
+    return new Promise((res, rej) => { const r = this.tx('readwrite').clear(); r.onsuccess = () => res(); r.onerror = () => rej(r.error); });
   }
 };
 
@@ -883,7 +952,7 @@ async function saveForm() {
   try {
     await DB.put(item);
     if (old) Object.assign(old, item); else state.items.unshift(item);
-    closeEditor(); render();
+    closeEditor(); markDirty(); render();
     toast(old ? '已更新' : '已保存到本地');
   } catch (e) { toast('保存失败：' + e.message, 'err'); }
 }
@@ -925,6 +994,16 @@ async function handleFiles(files) {
 }
 
 /* ============ Import / Export ============ */
+function normalizeItems(list) {
+  if (!Array.isArray(list)) throw new Error('文件格式不正确');
+  return list.filter(i => i && i.title && i.prompt).map(i => ({
+    id: i.id || uid(), type: i.type === 'video' ? 'video' : 'image',
+    title: String(i.title), prompt: String(i.prompt),
+    extra: i.extra || '', tool: i.tool || '', link: i.link || '', notes: i.notes || '',
+    tags: Array.isArray(i.tags) ? i.tags : [], images: Array.isArray(i.images) ? i.images : [],
+    favorite: !!i.favorite, createdAt: i.createdAt || Date.now(), updatedAt: i.updatedAt || Date.now()
+  }));
+}
 function exportData() {
   const payload = { app: 'Prompt Vault', version: 1, exportedAt: new Date().toISOString(), items: state.items };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
@@ -936,24 +1015,157 @@ function exportData() {
 }
 async function importData(file) {
   try {
-    const text = await file.text();
-    const data = JSON.parse(text);
-    const items = Array.isArray(data) ? data : data.items;
-    if (!Array.isArray(items)) throw new Error('文件格式不正确');
-    const clean = items.filter(i => i && i.title && i.prompt).map(i => ({
-      id: i.id || uid(), type: i.type === 'video' ? 'video' : 'image',
-      title: String(i.title), prompt: String(i.prompt),
-      extra: i.extra || '', tool: i.tool || '', link: i.link || '', notes: i.notes || '',
-      tags: Array.isArray(i.tags) ? i.tags : [], images: Array.isArray(i.images) ? i.images : [],
-      favorite: !!i.favorite, createdAt: i.createdAt || Date.now(), updatedAt: i.updatedAt || Date.now()
-    }));
+    const data = JSON.parse(await file.text());
+    const clean = normalizeItems(Array.isArray(data) ? data : data.items);
     if (!clean.length) throw new Error('没有可导入的记录');
     await DB.bulkPut(clean);
     state.items = await DB.getAll();
-    render();
+    markDirty(); render();
     toast('已导入 / 更新 ' + clean.length + ' 条记录');
   } catch (e) { toast('导入失败：' + e.message, 'err'); }
 }
+
+/* ============ GitHub Pages cloud data ============ */
+/* Pages 只发静态文件：仓库里的 data/prompts.json 就是唯一数据源，
+   浏览器本地库是离线工作副本；发布 = 用 GitHub REST API 提交一次 commit。 */
+const CLOUD = {
+  key: 'prompt_vault_cloud_cfg',
+  cfg: { owner: '', repo: '', branch: 'main', path: 'data/prompts.json', token: '', autoLoad: true, includeImages: true },
+  dirty: false, status: 'off', info: '未读取仓库数据'
+};
+function loadCloudCfg() {
+  try { Object.assign(CLOUD.cfg, JSON.parse(localStorage.getItem(CLOUD.key) || '{}')); } catch (e) {}
+}
+function saveCloudCfg() {
+  try { localStorage.setItem(CLOUD.key, JSON.stringify(CLOUD.cfg)); } catch (e) { toast('设置保存失败', 'err'); }
+}
+function markDirty() {
+  CLOUD.dirty = true;
+  if (CLOUD.status === 'synced' || CLOUD.status === 'empty') CLOUD.status = 'dirty';
+  updateCloudUI();
+}
+function cloudUrl() {
+  const p = CLOUD.cfg.path || 'data/prompts.json';
+  try { return new URL(p.replace(/^\.\//, ''), document.baseURI).toString(); } catch (e) { return p; }
+}
+function buildPayload() {
+  const items = CLOUD.cfg.includeImages ? state.items : state.items.map(i => Object.assign({}, i, { images: [] }));
+  return { app: 'Prompt Vault', version: 1, exportedAt: new Date().toISOString(), items };
+}
+function payloadText() { return JSON.stringify(buildPayload(), null, 2); }
+function fmtSize(n) { return n < 1048576 ? (n / 1024).toFixed(1) + ' KB' : (n / 1048576).toFixed(2) + ' MB'; }
+function updateCloudUI() {
+  const cls = CLOUD.status === 'synced' ? 'on' : ((CLOUD.status === 'dirty' || CLOUD.status === 'empty') ? 'warn' : (CLOUD.status === 'error' ? 'err' : ''));
+  ['#cloudDot', '#cloudDot2'].forEach(s => { const el = $(s); if (el) el.className = 'cloud-dot ' + cls; });
+  const label = { off: '未启用', empty: '仓库里没有数据', synced: '已与仓库同步', dirty: '本地有未发布改动', error: '同步出错' }[CLOUD.status] || CLOUD.status;
+  const st = $('#cloudStatusText');
+  if (st) st.textContent = label + ' · ' + CLOUD.info;
+  const sz = $('#cSize');
+  if (sz) sz.textContent = '当前待发布体积：' + fmtSize(new Blob([payloadText()]).size) + ' · ' + state.items.length + ' 条' + (CLOUD.cfg.includeImages ? '（含参考图）' : '（不含参考图）');
+}
+async function pullCloud(manual) {
+  if (!manual && !/^https?:$/.test(location.protocol)) {
+    CLOUD.status = 'off'; CLOUD.info = '本地打开时不读取仓库，部署到 Pages 后自动生效';
+    updateCloudUI(); return;
+  }
+  if (!CLOUD.cfg.autoLoad && !manual) { CLOUD.status = 'off'; CLOUD.info = '自动读取已关闭'; updateCloudUI(); return; }
+  if (CLOUD.dirty) {
+    if (!manual) { CLOUD.status = 'dirty'; CLOUD.info = '本地有未发布改动，已跳过自动覆盖'; updateCloudUI(); return; }
+    if (!confirm('本地有未发布的改动，读取仓库会覆盖它们。\n建议先「导出发布包」备份。继续吗？')) return;
+  }
+  CLOUD.info = '正在读取仓库数据…'; updateCloudUI();
+  try {
+    const u = cloudUrl();
+    const r = await fetch(u + (u.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store' });
+    if (r.status === 404) {
+      CLOUD.status = 'empty'; CLOUD.info = '未找到 ' + (CLOUD.cfg.path || 'data/prompts.json') + '，可点「发布」创建';
+      updateCloudUI(); if (manual) toast('仓库里还没有数据文件', 'err'); return;
+    }
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    const items = normalizeItems(Array.isArray(data) ? data : data.items);
+    if (!items.length) { CLOUD.status = 'empty'; CLOUD.info = '仓库数据为空，本地内容不会被覆盖'; updateCloudUI(); if (manual) toast('仓库数据为空'); return; }
+    await DB.clearAll(); await DB.bulkPut(items);
+    state.items = await DB.getAll();
+    CLOUD.dirty = false; CLOUD.status = 'synced';
+    CLOUD.info = '已从仓库载入 ' + items.length + ' 条，以仓库数据为准';
+    render(); updateCloudUI();
+    if (manual) toast('已从仓库载入 ' + items.length + ' 条');
+  } catch (e) {
+    CLOUD.status = 'error'; CLOUD.info = '读取失败：' + e.message;
+    updateCloudUI(); if (manual) toast('读取失败：' + e.message, 'err');
+  }
+}
+function downloadPublishFile() {
+  const url = URL.createObjectURL(new Blob([payloadText()], { type: 'application/json' }));
+  const a = document.createElement('a');
+  a.href = url; a.download = 'prompts.json';
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 2000);
+  toast('已导出发布包，放到仓库的 ' + (CLOUD.cfg.path || 'data/prompts.json') + ' 后 push');
+}
+function utf8ToBase64(str) {
+  const bytes = new TextEncoder().encode(str);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+async function publishCloud() {
+  const c = CLOUD.cfg;
+  if (!c.owner || !c.repo || !c.token) { toast('请先填写仓库所有者、仓库名和访问令牌', 'err'); return; }
+  const txt = payloadText();
+  const size = new Blob([txt]).size;
+  if (size > 8 * 1048576 && !confirm('数据文件约 ' + fmtSize(size) + '，过大会拖慢页面加载。仍要发布吗？')) return;
+  const path = (c.path || 'data/prompts.json').replace(/^\/+/, '');
+  const branch = c.branch || 'main';
+  const base = 'https://api.github.com/repos/' + encodeURIComponent(c.owner.trim()) + '/' + encodeURIComponent(c.repo.trim()) + '/contents/' + path.split('/').map(encodeURIComponent).join('/');
+  const headers = {
+    'Accept': 'application/vnd.github+json',
+    'Authorization': 'Bearer ' + c.token.trim(),
+    'X-GitHub-Api-Version': '2022-11-28',
+    'Content-Type': 'application/json'
+  };
+  const btn = $('#cPublish');
+  const oldText = btn.textContent;
+  btn.textContent = '发布中…'; btn.disabled = true;
+  try {
+    let sha = null;
+    const g = await fetch(base + '?ref=' + encodeURIComponent(branch) + '&t=' + Date.now(), { headers });
+    if (g.ok) { const j = await g.json(); sha = j.sha; }
+    else if (g.status === 401) throw new Error('令牌无效或已过期（401）');
+    else if (g.status !== 404) throw new Error('读取仓库失败：HTTP ' + g.status);
+    const body = { message: 'Update prompt vault data (' + new Date().toISOString().slice(0, 16).replace('T', ' ') + ')', content: utf8ToBase64(txt), branch };
+    if (sha) body.sha = sha;
+    const p = await fetch(base, { method: 'PUT', headers, body: JSON.stringify(body) });
+    if (!p.ok) {
+      let msg = 'HTTP ' + p.status;
+      try { const e = await p.json(); msg = e.message || msg; } catch (err) {}
+      throw new Error(msg);
+    }
+    CLOUD.dirty = false; CLOUD.status = 'synced';
+    CLOUD.info = '已提交 ' + fmtSize(size) + '，Pages 约 1–2 分钟后更新';
+    updateCloudUI();
+    toast('发布成功，等待 Pages 重新构建');
+  } catch (e) {
+    CLOUD.status = 'error'; CLOUD.info = '发布失败：' + e.message; updateCloudUI();
+    toast('发布失败：' + e.message, 'err');
+  } finally { btn.textContent = oldText; btn.disabled = false; }
+}
+function fillCloudForm() {
+  $('#cOwner').value = CLOUD.cfg.owner; $('#cRepo').value = CLOUD.cfg.repo;
+  $('#cBranch').value = CLOUD.cfg.branch; $('#cPath').value = CLOUD.cfg.path;
+  $('#cToken').value = CLOUD.cfg.token;
+  $('#cAuto').checked = !!CLOUD.cfg.autoLoad; $('#cImages').checked = !!CLOUD.cfg.includeImages;
+  updateCloudUI();
+}
+function readCloudForm() {
+  CLOUD.cfg.owner = $('#cOwner').value.trim(); CLOUD.cfg.repo = $('#cRepo').value.trim();
+  CLOUD.cfg.branch = $('#cBranch').value.trim() || 'main';
+  CLOUD.cfg.path = $('#cPath').value.trim() || 'data/prompts.json';
+  CLOUD.cfg.token = $('#cToken').value.trim();
+  CLOUD.cfg.autoLoad = $('#cAuto').checked; CLOUD.cfg.includeImages = $('#cImages').checked;
+}
+function openCloudSettings() { closeEditor(); fillCloudForm(); $('#cloudOverlay').classList.add('open'); }
+function closeCloudSettings() { $('#cloudOverlay').classList.remove('open'); }
 
 /* ============ Sample data ============ */
 function svgPic(bg1, bg2, text) {
@@ -984,12 +1196,21 @@ async function loadDemo() {
   ];
   await DB.bulkPut(demo);
   state.items = await DB.getAll();
-  render();
+  markDirty(); render();
   toast('已载入 2 条示例，可随时编辑或删除');
 }
 
 /* ============ Events ============ */
 function bindEvents() {
+  $('#cloudBtn').onclick = openCloudSettings;
+  $('#cloudCloseX').onclick = closeCloudSettings;
+  $('#cClose').onclick = closeCloudSettings;
+  $('#cloudOverlay').onclick = (e) => { if (e.target === $('#cloudOverlay')) closeCloudSettings(); };
+  $('#cSave').onclick = () => { readCloudForm(); saveCloudCfg(); closeCloudSettings(); toast('云同步设置已保存'); pullCloud(false); };
+  $('#cPull').onclick = () => { readCloudForm(); saveCloudCfg(); pullCloud(true); };
+  $('#cExport').onclick = () => { readCloudForm(); saveCloudCfg(); downloadPublishFile(); };
+  $('#cPublish').onclick = () => { readCloudForm(); saveCloudCfg(); publishCloud(); };
+  $('#cImages').onchange = () => { readCloudForm(); updateCloudUI(); };
   $('#newBtn').onclick = () => openEditor();
   $('#closeDrawer').onclick = closeEditor;
   $('#cancelBtn').onclick = closeEditor;
@@ -1023,7 +1244,7 @@ function bindEvents() {
       if (!state.items.length) { toast('库里还没有数据'); return; }
       if (!confirm('确定清空全部 ' + state.items.length + ' 条提示词吗？\n此操作不可撤销，建议先「导出」备份。')) return;
       await Promise.all(state.items.map(i => DB.remove(i.id)));
-      state.items = []; resetFilters(); toast('已清空全部数据');
+      state.items = []; markDirty(); resetFilters(); toast('已清空全部数据');
     }
   };
   $('#tagCloud').onclick = (e) => { const b = e.target.closest('[data-tag]'); if (b) { state.tag = state.tag === b.dataset.tag ? '' : b.dataset.tag; render(); } };
@@ -1046,12 +1267,12 @@ function bindEvents() {
     if (act === 'zoom') { e.stopPropagation(); $('#lightboxImg').src = actEl.dataset.src; $('#lightbox').classList.add('open'); return; }
     if (act === 'fav') {
       e.stopPropagation(); it.favorite = !it.favorite; it.updatedAt = Date.now();
-      await DB.put(it); render(); toast(it.favorite ? '已加入收藏' : '已取消收藏'); return;
+      await DB.put(it); markDirty(); render(); toast(it.favorite ? '已加入收藏' : '已取消收藏'); return;
     }
     if (act === 'del') {
       e.stopPropagation();
       if (!confirm('删除「' + it.title + '」？\n该条记录的提示词和参考图都会一并删除。')) return;
-      await DB.remove(id); state.items = state.items.filter(x => x.id !== id); render(); toast('已删除'); return;
+      await DB.remove(id); state.items = state.items.filter(x => x.id !== id); markDirty(); render(); toast('已删除'); return;
     }
     openEditor(id);
   };
@@ -1063,7 +1284,7 @@ function bindEvents() {
     const it = state.items.find(x => x.id === editor.id); if (!it) return;
     if (!confirm('删除「' + it.title + '」？此操作不可撤销。')) return;
     await DB.remove(editor.id); state.items = state.items.filter(x => x.id !== editor.id);
-    closeEditor(); render(); toast('已删除');
+    closeEditor(); markDirty(); render(); toast('已删除');
   };
 
   const tagInput = $('#fTagInput');
@@ -1104,20 +1325,22 @@ function bindEvents() {
   });
   document.addEventListener('keydown', (e) => {
     const open = $('#overlay').classList.contains('open');
+    const cloudOpen = $('#cloudOverlay').classList.contains('open');
     if (e.key === 'Escape') {
       if ($('#lightbox').classList.contains('open')) $('#lightbox').classList.remove('open');
+      else if (cloudOpen) closeCloudSettings();
       else if (open) closeEditor();
       return;
     }
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && open) { e.preventDefault(); saveForm(); return; }
-    if (!open && e.key === 'n' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); openEditor(); }
-    if (!open && e.key === '/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); $('#search').focus(); }
+    if (!open && !cloudOpen && e.key === 'n' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); openEditor(); }
+    if (!open && !cloudOpen && e.key === '/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); $('#search').focus(); }
   });
 }
 
 /* ============ Init ============ */
 (async function init() {
-  loadPrefs(); applyTheme();
+  loadPrefs(); loadCloudCfg(); applyTheme();
   $('#sortSel').value = state.sort;
   document.querySelectorAll('#viewSeg button').forEach(b => b.classList.toggle('active', b.dataset.view === state.view));
   try {
@@ -1126,6 +1349,8 @@ function bindEvents() {
   } catch (e) { toast('读取数据失败：' + e.message, 'err'); }
   bindEvents();
   render();
+  updateCloudUI();
+  pullCloud(false);
   if (DB.mode !== 'idb') {
     setTimeout(() => toast(DB.mode === 'mem' ? '当前环境无法持久化，请及时导出备份' : '已启用轻量存储模式，建议定期导出备份', 'err'), 700);
   }
