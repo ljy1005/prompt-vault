@@ -1,7 +1,7 @@
 {
   "app": "Prompt Vault",
   "version": 2,
-  "exportedAt": "2026-11-18T12:34:52.858Z",
+  "exportedAt": "2026-11-18T12:55:01.012Z",
   "items": [
     {
       "id": "247353f1-6b80-40cb-967d-bb2055a9d47a",
@@ -189,11 +189,19 @@
           "seed": "",
           "extra": "",
           "images": []
+        },
+        {
+          "id": "1d37e736-b81c-46b3-b5c5-b8dfea5df9d5",
+          "label": "镜头 7",
+          "prompt": "subject_definitions:\n<Subject 1> is the short-haired girl shown in <Picture 1>, a sweet young woman with a dark brown-black chin-length bob, long side-swept bangs covering one side of her forehead and leaving her other ear fully exposed, a thick red knitted scarf tied with a single knot at her neck with both ends hanging, a black wool coat over a black knit sweater, a black leather skirt and black knee-high boots, holding a small notebook and a pen.\n<Subject 2> is the whale-girl maid shown in <Picture 2>, a young woman with long ocean-blue wavy hair with light-blue gradient tips, a single curled ahoge on her crown, blue whale-fin hair ornaments on both sides of her head, a white frilled maid headband, blue eyes, a navy long-sleeved puff-sleeve dress with a white frilled apron bearing a small blue fish embroidery on the pocket, and a thick blue whale tail rising from behind her waist.\n<Subject 3> is the open-plan office interior shown in <Picture 3>: a bright modern coworking floor in mid-afternoon daylight; the corner of one small workstation includes a desk with a neat stack of notebooks, a colored pencil case and papers, near the bright window side.\n\nsummary:\n[reference generation] A 10-second 9:16 vertical live-action light-comedy skit inside the <Subject 3> office. In a security-camera-style close view, <Subject 1> faces the lens directly, writing in her notebook and seriously reporting a daily record about her absent-minded coworker, while <Subject 2>'s blue whale tail freezes mid-air behind her; a shrimp snack offered from off-screen buys the reporter off, and the written record ends as a hand-drawn smiley. The dialogue is spoken in Chinese.\n\nretention_analysis:\n<Subject 1> (appears in [Shot 1], [Shot 2], [Shot 3]): fully_preserved - all defining features retained throughout.\n<Subject 2> (appears in [Shot 2], [Shot 3]): fully_preserved - all defining features retained, although only her thick blue tail and one frilled sleeve reach into frame.\n<Subject 3> (appears in [Shot 1], [Shot 2]): partially_preserved - only the corner of the small desk with the notebook stack and the bright window side is visible, matching materials, palette and daylight.\n\ndetailed_description:\nThe target video is a live-action cinematic light-comedy skit with the same bright, clean, warm daylight look as an office comedy series, vertical framing in close and medium-close shots only.\n[Shot 1] A slightly high, subtly wide-angle close shot like a wall security camera inside the <Subject 3> office, mid-afternoon daylight from the window side. <Subject 1>, the short-haired girl with the red scarf, sits at the corner of her small desk with the neat notebook stack, and looks straight into the lens with calm professional seriousness, as if reporting to a surveillance camera. She writes in the open notebook on the desk and recites clearly in a bright, brisk customer-service voice, <d>[Chinese] 今日记录：大肥鱼摸鱼七次，吃东西十二次。</d> her lips moving in sync with the words, her eyes never leaving the camera, the pen scratching one neat line at a time.\n[Shot 2] At 00:04.300, the camera cuts to a static medium close-up from the near side of the desk, <Subject 1> still at frame edge holding her report pose toward the lens. Behind her back, a thick blue whale tail rises slowly into frame behind the chair, stops, and freezes rigid in mid-air, caught eavesdropping. After a beat, <Subject 2>'s frilled sleeve and hand slide in from behind, offering one golden fried shrimp cracker toward <Subject 1>'s mouth; without breaking her professional composure she takes a neat bite, eyes widening a little in delight, chewing quietly while still facing the lens.\n[Shot 3] At 00:07.500, the camera cuts to a static top-down close-up of the open notebook page, neat handwritten lines softly unreadable: the pen pauses, then cheerfully draws a large smiley face right over the middle of the record. Behind the notebook at the top edge of frame, the blue whale tail wags twice in happy approval, and off-screen <Subject 2> says warmly, genuinely delighted, <d>[Chinese] 好人，多说点。</d> the pen adds a small heart next to the smiley, and the shot ends.\n\noverall_soundscape:\nQuiet afternoon office room tone; pen scratching on paper in steady strokes, one faint frozen pause with a tiny fabric rustle when the tail stops mid-air, a crisp dry crunch of the shrimp cracker bitten neatly, a marker squeaking as the smiley is drawn, and a soft happy tail thump against the chair.\n\nnon_diegetic_music:\nA dry, minimal pizzicato ticking like a report clock under the recitation; everything stops for a half-second at the shrimp moment, then a warm toy-piano phrase plays over the smiley and heart, ending on a soft ding.",
+          "seed": "",
+          "extra": "",
+          "images": []
         }
       ],
       "favorite": true,
       "createdAt": 1794748117896,
-      "updatedAt": 1795005290970
+      "updatedAt": 1795006499156
     },
     {
       "id": "d630db1a-e68f-488d-a3dc-a0e672170a0a",
